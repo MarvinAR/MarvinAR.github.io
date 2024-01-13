@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Invitation Letter</title>
+	<style>
+		body {
+			background: linear-gradient(45deg, palegoldenrod, palegreen, paleturquoise, palevioletred);
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			height: 300vh;
+		}
+
+		section {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: auto;
+			height: 100vh;
+			width: 500px;
+			text-align: center;
+			padding: 20px;
+			box-sizing: border-box;
+			filter: blur(0.4px);
+		}
+
+		h1 {
+			color: #333;
+		}
+
+		p {
+			color: #555;
+		}
+
+		#countdown {
+			font-size: 2em;
+			color: black;
+		}
+
+		button {
+			padding: 20px;
+			cursor: pointer;
+			border: none;
+			border-radius: 50%;
+			font-size: 16px;
+			background-color: #3498db;
+			color: #fff;
+			transition: background-color 0.3s, transform 0.3s;
+		}
+
+		button:hover {
+			background-color: #2980b9;
+		}
+
+		#container.dark-mode {
+			background-color: #333;
+			color: #fff;
+		}
+
+		#container {
+			transition: background-color 1s;
+			background-color: white;
+			width: 500px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: auto;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container">
+		<section class="intro">
+			<h1>Welcome to the Party!</h1>
+			<p>We are thrilled to invite you to a fantastic celebration.</p>
+			<button id="toggleBtn">☀️</button>
+		</section>
+
+		<section class="content">
+			<h1>Event Details</h1>
+			<p>Date: January 30, 2024</p>
+			<p>Time: 7:00 PM - Midnight</p>
+			<p>Location: XYZ Venue</p>
+			<p>Dress Code: Smart Casual</p>
+		</section>
+
+		<section class="outro">
+			<h1>See You There!</h1>
+			<p>Thank you for considering our invitation. We look forward to celebrating with you!</p>
+			<div id="countdown">Countdown: 10 days 12 hours 30 minutes</div>
+		</section>
+	</div>
+
+
+	<script>
+		function toggleDarkMode() {
+			const body = document.getElementById('container');
+			body.classList.toggle('dark-mode');
+			const isDarkModeEnabled = body.classList.contains('dark-mode');
+			document.getElementById('toggleBtn').innerHTML = isDarkModeEnabled ? '🌙' : '☀️';
+			
+			var h1s = document.getElementsByTagName("h1");
+			var p = document.getElementsByTagName("p");
+			if(isDarkModeEnabled) {
+
+				for(var i = 0; i < h1s.length; i++) {
+					var div = h1s[i];
+					div.style.color = 'white'; 
+				}
+
+				for(var i = 0; i < p.length; i++) {
+					var div = p[i];
+					div.style.color = 'white'; 
+				}
+				document.getElementById('countdown').style.color = "white";
+			} 
+			else  {
+				var h1s = document.getElementsByTagName("h1");
+
+				for(var i = 0; i < h1s.length; i++) {
+					var div = h1s[i];
+					div.style.color = 'black'; 
+				}
+
+				for(var i = 0; i < p.length; i++) {
+					var div = p[i];
+					div.style.color = 'black'; 
+				}
+				document.getElementById('countdown').style.color = "black";
+
+			}
+
+			document.cookie = `darkMode=${isDarkModeEnabled ? 'enabled' : 'disabled'}; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/`;
+		}
+
+		function checkDarkModeFromCookie() {
+			const darkModeCookie = decodeURIComponent(document.cookie);
+			const isDarkModeEnabled = darkModeCookie ? darkModeCookie.split('=')[1] === 'enabled' : false;
+
+			var h1s = document.getElementsByTagName("h1");
+			var p = document.getElementsByTagName("p");
+
+			if (isDarkModeEnabled) {
+				document.getElementById('container').classList.add('dark-mode');
+				document.getElementById('toggleBtn').textContent = '🌙';
+			}
+			if(isDarkModeEnabled) {
+
+				for(var i = 0; i < h1s.length; i++) {
+					var div = h1s[i];
+					div.style.color = 'white'; 
+				}
+
+				for(var i = 0; i < p.length; i++) {
+					var div = p[i];
+					div.style.color = 'white'; 
+				}
+				} 
+			else  {
+				var h1s = document.getElementsByTagName("h1");
+
+				for(var i = 0; i < h1s.length; i++) {
+					var div = h1s[i];
+					div.style.color = 'black'; 
+				}
+
+				for(var i = 0; i < p.length; i++) {
+					var div = p[i];
+					div.style.color = 'black'; 
+				}
+			}
+		}
+		document.getElementById('toggleBtn').addEventListener('click', toggleDarkMode);
+		checkDarkModeFromCookie();
+
+		const countdownElement = document.getElementById('countdown');
+		const eventDate = new Date('January 30, 2024 19:00:00').getTime();
+
+		function countdown() {
+			const now = new Date().getTime();
+			const time_left = eventDate - now;
+
+			const days = Math.floor(time_left / (1000 * 60 * 60 * 24)), hours = Math.floor((time_left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)), minutes = Math.floor((time_left % (1000 * 60 * 60)) / (1000 * 60));
+
+			countdownElement.textContent = `Countdown: ${days} days ${hours} hours ${minutes} minutes`;
+		}
+
+		setInterval(countdown, 1000);
+	</script>
+
+</body>
+
+</html>
